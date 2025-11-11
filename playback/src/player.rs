@@ -696,11 +696,11 @@ impl Drop for Player {
     }
 }
 
-struct PlayerLoadedTrackData {
-    decoder: Decoder,
+pub struct PlayerLoadedTrackData {
+    pub decoder: Decoder,
+    pub audio_item: AudioItem,
     normalisation_data: NormalisationData,
     stream_loader_controller: StreamLoaderController,
-    audio_item: AudioItem,
     bytes_per_second: usize,
     duration_ms: u32,
     stream_position_ms: u32,
@@ -719,7 +719,7 @@ enum PlayerPreload {
     },
 }
 
-type Decoder = Box<dyn AudioDecoder + Send>;
+pub type Decoder = Box<dyn AudioDecoder + Send>;
 
 enum PlayerState {
     Stopped,
@@ -931,10 +931,10 @@ impl PlayerState {
     }
 }
 
-struct PlayerTrackLoader {
-    session: Session,
-    config: PlayerConfig,
-    local_file_lookup: Arc<LocalFileLookup>,
+pub struct PlayerTrackLoader {
+    pub session: Session,
+    pub config: PlayerConfig,
+    pub local_file_lookup: Arc<LocalFileLookup>,
 }
 
 impl PlayerTrackLoader {
@@ -989,7 +989,7 @@ impl PlayerTrackLoader {
         Some(data_rate.ceil() as usize)
     }
 
-    async fn load_track(
+    pub async fn load_track(
         &self,
         track_uri: SpotifyUri,
         position_ms: u32,
